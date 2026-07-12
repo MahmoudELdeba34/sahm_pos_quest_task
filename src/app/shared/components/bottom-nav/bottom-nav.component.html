@@ -1,0 +1,22 @@
+<nav class="bottom-nav" [class.bottom-nav--floating]="floating()" aria-label="Primary">
+  <a routerLink="/dashboard" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+    <div class="ico"><span class="material-symbols-outlined">dashboard</span></div>
+    <span>{{ 'BOTTOM_NAV.HOME' | translate }}</span>
+  </a>
+  <a routerLink="/orders" routerLinkActive="is-active">
+    <div class="ico"><span class="material-symbols-outlined">receipt_long</span></div>
+    <span>{{ 'BOTTOM_NAV.ORDERS' | translate }}</span>
+  </a>
+  <a routerLink="/ai" routerLinkActive="is-active">
+    <div class="ico"><span class="material-symbols-outlined">psychology</span></div>
+    <span>{{ 'BOTTOM_NAV.AI' | translate }}</span>
+  </a>
+  <a routerLink="/kitchen" routerLinkActive="is-active">
+    <div class="ico"><span class="material-symbols-outlined">restaurant_menu</span></div>
+    <span>{{ 'BOTTOM_NAV.KITCHEN' | translate }}</span>
+  </a>
+  <a routerLink="/products" routerLinkActive="is-active">
+    <div class="ico"><span class="material-symbols-outlined">inventory_2</span></div>
+    <span>{{ 'BOTTOM_NAV.STOCK' | translate }}</span>
+  </a>
+</nav>

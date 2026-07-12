@@ -1,0 +1,133 @@
+<div class="hub">
+  <section class="chat gos-glass">
+    <header class="chat__head">
+      <div class="chat__brand">
+        <div class="chat__orb"><span class="material-symbols-outlined fill">psychology</span></div>
+        <div>
+          <h2>{{ 'AI_ASSISTANT.TITLE' | translate }}</h2>
+          <p><span class="live"></span> {{ 'AI_ASSISTANT.ANALYZING' | translate }}</p>
+        </div>
+      </div>
+      <button type="button" class="icon" (click)="store.refresh()" [disabled]="store.isBusy()" aria-label="Refresh AI">
+        <span class="material-symbols-outlined">refresh</span>
+      </button>
+    </header>
+
+    <div class="chat__stream" aria-live="polite">
+      <div class="bubble bubble--ai gos-entry">
+        <div class="avatar ai"><span class="material-symbols-outlined">smart_toy</span></div>
+        <div class="msg">
+          {{ 'AI_ASSISTANT.WELCOME_BACK' | translate }}
+          <strong>{{ kitchen.level() | translate }}</strong>
+          ({{ kitchen.overallPercent() }}%).
+          @if (orders.selectedOrder(); as order) {
+            {{ 'AI_ASSISTANT.FOCUSED_ON_ORDER' | translate }} {{ order.number }} {{ 'AI_ASSISTANT.FOR' | translate }} {{ order.customerName }}.
+          }
+        </div>
+      </div>
+
+      @if (store.error()) {
+        <div class="bubble bubble--alert gos-entry">
+          <div class="avatar danger"><span class="material-symbols-outlined fill">warning</span></div>
+          <div class="msg alert">
+            <h4>{{ 'AI_ASSISTANT.CRITICAL_ALERT' | translate }}</h4>
+            <p>{{ store.error() }}</p>
+            <div class="actions">
+              <button type="button" class="gos-btn gos-btn--danger" (click)="store.refresh()">{{ 'AI_ASSISTANT.RETRY' | translate }}</button>
+              <button type="button" class="gos-btn gos-btn--ghost">{{ 'AI_ASSISTANT.DISMISS' | translate }}</button>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (store.partialText()) {
+        <div class="bubble bubble--ai gos-entry">
+          <div class="avatar ai"><span class="material-symbols-outlined">auto_graph</span></div>
+          <div class="msg">
+            {{ store.partialText() }}
+            @if (store.isBusy()) { <span class="caret"></span> }
+          </div>
+        </div>
+      }
+
+      @if (store.suggestions().length) {
+        <div class="bubble bubble--ai gos-entry">
+          <div class="avatar ai"><span class="material-symbols-outlined">auto_graph</span></div>
+          <div class="msg wide">
+            <p>{{ 'AI_ASSISTANT.HIGH_IMPACT_RECS' | translate }}</p>
+            <div class="recs">
+              @for (suggestion of store.suggestions(); track suggestion.id) {
+                <article class="rec" [ngClass]="'rec--' + suggestion.type">
+                  <div class="rec__top">
+                    <span>{{ 'AI_ASSISTANT.' + suggestion.type.toUpperCase() | translate }}</span>
+                    <strong>{{ suggestion.confidence * 100 | number: '1.0-0' }}%</strong>
+                  </div>
+                  <h3>{{ suggestion.title }}</h3>
+                  <p>{{ suggestion.message }}</p>
+                  <div class="bar"><i [style.width.%]="suggestion.confidence * 100"></i></div>
+                </article>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <footer class="chat__input">
+      <input type="text" [placeholder]="'AI_ASSISTANT.ASK_PLACEHOLDER' | translate" [disabled]="store.isBusy()" />
+      <button type="button" class="send" (click)="store.refresh()" [disabled]="store.isBusy()">
+        <span class="material-symbols-outlined">send</span>
+      </button>
+    </footer>
+  </section>
+
+  <aside class="side">
+    <section class="eff gos-glass">
+      <h3>{{ 'AI_ASSISTANT.EFFICIENCY' | translate }}</h3>
+      <div class="stat">
+        <div class="stat__row">
+          <div>
+            <p class="gos-label">{{ 'AI_ASSISTANT.SPEED' | translate }}</p>
+            <div class="stat__value"><span>{{ kitchen.overallPercent() ? 14.2 : 14.2 | number }}</span> {{ 'AI_ASSISTANT.MIN_AVG' | translate }}</div>
+          </div>
+          <div class="trend down">+4.1%<small>{{ 'AI_ASSISTANT.VS_YESTERDAY' | translate }}</small></div>
+        </div>
+        <div class="track"><i [style.width.%]="kitchen.overallPercent() || 65"></i></div>
+      </div>
+      <div class="stat">
+        <div class="stat__row">
+          <div>
+            <p class="gos-label">{{ 'AI_ASSISTANT.WASTE' | translate }}</p>
+            <div class="stat__value waste"><span>{{ 142 | currency: 'EGP':'symbol':'1.0-0' }}</span> {{ 'AI_ASSISTANT.TODAY' | translate }}</div>
+          </div>
+          <div class="trend up">-12%<small>{{ 'AI_ASSISTANT.AI_GOAL_TRACK' | translate }}</small></div>
+        </div>
+        <div class="track waste"><i style="width: 28%"></i></div>
+      </div>
+      <div class="tip">
+        <span class="material-symbols-outlined">tips_and_updates</span>
+        <p>{{ 'AI_ASSISTANT.TIP_PREP_STATION' | translate }}</p>
+      </div>
+    </section>
+
+    <div class="bento">
+      <article class="mini">
+        <span class="material-symbols-outlined">sentiment_satisfied</span>
+        <p class="gos-label">{{ 'AI_ASSISTANT.MORALE' | translate }}</p>
+        <h4>{{ 0.88 | percent }}</h4>
+        <small class="up">+2% {{ 'AI_ASSISTANT.PEAK_SHIFT' | translate }}</small>
+      </article>
+      <article class="mini">
+        <span class="material-symbols-outlined">table_restaurant</span>
+        <p class="gos-label">{{ 'AI_ASSISTANT.TURN_RATE' | translate }}</p>
+        <h4>{{ 1.4 | number }}h</h4>
+        <small>{{ 'AI_ASSISTANT.OPTIMAL' | translate }} {{ 1.2 | number }}h</small>
+      </article>
+    </div>
+
+    <div class="neural">
+      <p class="gos-label">{{ 'AI_ASSISTANT.DEEP_ANALYSIS' | translate }}</p>
+      <span>{{ 'AI_ASSISTANT.DEEP_DESC' | translate }}</span>
+    </div>
+  </aside>
+</div>

@@ -1,0 +1,103 @@
+<div class="order-dialog gos-glass">
+  <header>
+    <div class="header-content">
+      <h2>{{ 'ORDERS.ORDER' | translate }} {{ order.number | localizedNum }}</h2>
+      <span class="status-badge" [attr.data-status]="order.status">
+        {{ 'ORDERS.' + order.status.toUpperCase() | translate }}
+      </span>
+    </div>
+    <button type="button" class="close-btn" (click)="close()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </header>
+
+  <div class="dialog-body">
+    <section class="meta-section">
+      <div class="meta-item">
+        <span class="material-symbols-outlined">person</span>
+        <div>
+          <small>{{ 'ORDERS.CUSTOMER' | translate }}</small>
+          <strong>{{ order.customerName }}</strong>
+        </div>
+      </div>
+      <div class="meta-item">
+        <span class="material-symbols-outlined">
+          {{ order.channel === 'delivery' ? 'local_shipping' : order.channel === 'walk-in' ? 'storefront' : 'language' }}
+        </span>
+        <div>
+          <small>{{ 'ORDERS.CHANNEL' | translate }}</small>
+          <strong style="text-transform: capitalize;">{{ order.channel }}</strong>
+          @if (order.tableNumber) {
+            <span class="table-tag">{{ 'ORDERS.TABLE' | translate }} {{ order.tableNumber | localizedNum }}</span>
+          }
+        </div>
+      </div>
+      <div class="meta-item">
+        <span class="material-symbols-outlined" [class.urgent]="order.priority === 'urgent' || order.priority === 'high'">flag</span>
+        <div>
+          <small>{{ 'ORDERS.PRIORITY' | translate }}</small>
+          <strong [class.urgent]="order.priority === 'urgent' || order.priority === 'high'" style="text-transform: capitalize;">{{ order.priority }}</strong>
+        </div>
+      </div>
+      <div class="meta-item">
+        <span class="material-symbols-outlined">schedule</span>
+        <div>
+          <small>{{ 'ORDERS.PLACED_AT' | translate }}</small>
+          <strong>{{ order.createdAt | date:'shortTime' | localizedNum }}</strong>
+        </div>
+      </div>
+    </section>
+
+    @if (order.deliveryAddress) {
+      <section class="address-section">
+        <span class="material-symbols-outlined">location_on</span>
+        <div>
+          <small>{{ 'ORDERS.DELIVERY_ADDRESS' | translate }}</small>
+          <p>{{ order.deliveryAddress }}</p>
+        </div>
+      </section>
+    }
+
+    <section class="items-section">
+      <h3>{{ 'ORDERS.ITEMS' | translate }}</h3>
+      <div class="receipt">
+        @for (item of order.items; track item.id) {
+          <div class="receipt-item">
+            <div class="item-main">
+              <span class="qty">{{ item.quantity | localizedNum }}x</span>
+              <span class="name">{{ item.name }}</span>
+            </div>
+            <span class="price">{{ item.unitPrice * item.quantity | currency:'EGP':'symbol':'1.0-0' | localizedNum }}</span>
+          </div>
+          @if (item.notes) {
+            <div class="item-notes">
+              <span class="material-symbols-outlined">edit_note</span>
+              <em>{{ item.notes }}</em>
+            </div>
+          }
+        }
+        
+        <div class="receipt-total">
+          <span>{{ 'ORDERS.TOTAL' | translate }}</span>
+          <strong>{{ order.total | currency:'EGP':'symbol':'1.0-0' | localizedNum }}</strong>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    @if (canWrite) {
+      <button type="button" class="gos-btn gos-btn--danger" (click)="cancelOrder()" [disabled]="order.status === 'completed' || order.status === 'cancelled'">
+        {{ 'ORDERS.CANCEL_ORDER' | translate }}
+      </button>
+      <div class="primary-actions">
+        <button type="button" class="gos-btn" (click)="close()">{{ 'ORDERS.CLOSE' | translate }}</button>
+        <button type="button" class="gos-btn gos-btn--primary" (click)="advanceOrder()" [disabled]="order.status === 'completed' || order.status === 'cancelled'">
+          {{ 'ORDERS.ADVANCE_STATUS' | translate }}
+        </button>
+      </div>
+    } @else {
+      <button type="button" class="gos-btn" (click)="close()">{{ 'ORDERS.CLOSE' | translate }}</button>
+    }
+  </footer>
+</div>

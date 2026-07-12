@@ -1,0 +1,45 @@
+<section class="kitchen gos-glass">
+  <header class="kitchen__header">
+    <div>
+      <h1>{{ 'KITCHEN.LOAD' | translate }}</h1>
+      <p>{{ 'KITCHEN.LIVE_WORKLOAD' | translate }}</p>
+    </div>
+    <span class="level" [attr.data-level]="store.level()">{{ store.level() }}</span>
+  </header>
+
+  <div class="kitchen__gauge" role="meter" [attr.aria-valuenow]="store.overallPercent()" aria-valuemin="0" aria-valuemax="100">
+    <div class="fill" [style.width.%]="store.overallPercent()" [attr.data-level]="store.level()"></div>
+  </div>
+  <p class="kitchen__meta">{{ store.overallPercent() | number: '1.0-0' | localizedNum }}% {{ 'KITCHEN.OVERALL' | translate }} · {{ store.delayedCount() | localizedNum }} {{ 'KITCHEN.ORDERS_DELAYED' | translate }}</p>
+
+  <ul class="stations">
+    @for (station of store.stations(); track station.id) {
+      <li>
+        <div class="stations__label">
+          <span>{{ station.name }}</span>
+          <span>{{ station.activeTickets | localizedNum }}/{{ station.capacity | localizedNum }}</span>
+        </div>
+        <div class="stations__bar"><i [style.width.%]="station.loadPercent"></i></div>
+      </li>
+    } @empty {
+      <li class="waiting">{{ 'KITCHEN.WAITING_TELEMETRY' | translate }}</li>
+    }
+  </ul>
+
+  @if (canWrite()) {
+    <form class="editor" [formGroup]="form" (ngSubmit)="save()">
+      <div class="editor__head">
+        <h2>{{ 'KITCHEN.UPDATE_LOAD' | translate }}</h2>
+        <button type="button" class="gos-btn gos-btn--ghost" (click)="syncForm()">{{ 'KITCHEN.LOAD_CURRENT' | translate }}</button>
+      </div>
+      <div class="editor__grid">
+        <label><span>{{ 'KITCHEN.OVERALL_PERCENT' | translate }}</span><input type="number" formControlName="overallPercent" /></label>
+        <label><span>{{ 'KITCHEN.GRILL_TICKETS' | translate }}</span><input type="number" formControlName="grillTickets" /></label>
+        <label><span>{{ 'KITCHEN.GRILL_CAPACITY' | translate }}</span><input type="number" formControlName="grillCapacity" /></label>
+        <label><span>{{ 'KITCHEN.COLD_TICKETS' | translate }}</span><input type="number" formControlName="coldTickets" /></label>
+        <label><span>{{ 'KITCHEN.COLD_CAPACITY' | translate }}</span><input type="number" formControlName="coldCapacity" /></label>
+      </div>
+      <button type="submit" class="gos-btn gos-btn--primary">{{ 'KITCHEN.SAVE_SNAPSHOT' | translate }}</button>
+    </form>
+  }
+</section>

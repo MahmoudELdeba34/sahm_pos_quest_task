@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 120">
+  <defs>
+    <linearGradient id="domeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFAD33" />
+      <stop offset="100%" stop-color="#E85D04" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(15, 10) scale(1)">
+    <!-- Steam -->
+    <path d="M 32,23 Q 36,17 31,11 Q 26,5 34,1" stroke="#F37A1F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M 50,19 Q 55,11 48,3 Q 41,-5 51,-9" stroke="#F37A1F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M 68,23 Q 64,17 69,11 Q 74,5 66,1" stroke="#F37A1F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- Cloche Dome -->
+    <!-- knob -->
+    <path d="M 46,24 C 46,21 54,21 54,24 Z" fill="#F37A1F"/>
+    <path d="M 22,50 C 22,32 78,32 78,50 Z" fill="url(#domeGrad)"/>
+    <rect x="15" y="48" width="70" height="4" rx="2" fill="#E85D04"/>
+
+    <!-- Monitor Outer -->
+    <path d="M 38,72 L 62,72 L 66,79 L 34,79 Z" fill="#122C46"/>
+    <path d="M 26,52 L 74,52 C 76,52 77,54 78,56 L 82,73 C 82.5,75 81,77 79,77 L 21,77 C 19,77 17.5,75 18,73 L 22,56 C 23,54 24,52 26,52 Z" fill="#122C46"/>
+    <path d="M 28,55 L 72,55 C 73,55 74,56 74.5,57 L 77,70 C 77.5,71 76.5,72 75,72 L 25,72 C 23.5,72 22.5,71 23,70 L 25.5,57 C 26,56 27,55 28,55 Z" fill="#FFFFFF"/>
+    <circle cx="43" cy="63.5" r="6" fill="#179B92"/>
+    <path d="M 40,63.5 L 42.5,66 L 47,61" stroke="#FFFFFF" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="52" y="60.5" width="14" height="2.2" rx="1" fill="#179B92"/>
+    <rect x="52" y="65" width="14" height="2.2" rx="1" fill="#179B92"/>
+
+    <!-- Base -->
+    <path d="M 22,79 L 78,79 C 80,79 81,80 81,82 L 81,88 C 81,90 80,91 78,91 L 22,91 C 20,91 19,90 19,88 L 19,82 C 19,80 20,79 22,79 Z" fill="#122C46"/>
+    <circle cx="73" cy="85" r="1.8" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="120" y1="20" x2="120" y2="100" stroke="#CCCCCC" stroke-opacity="0.3" stroke-width="2"/>
+
+  <!-- SAHM text -->
+  <g transform="translate(135, 50)" fill="#F3EEE4" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="900" font-size="44" letter-spacing="1">
+    <text x="0" y="0">S</text>
+    
+    <!-- Custom A -->
+    <path d="M 28,0 L 40,-33 L 50,-33 L 62,0 L 52,0 L 46,-18 L 38,0 Z" fill="#F3EEE4"/>
+    <polygon points="46,-14 41,-2 51,-2" fill="#179B92"/>
+    
+    <text x="68" y="0">H</text>
+    <text x="104" y="0">M</text>
+  </g>
+
+  <!-- FOOD POS text -->
+  <g transform="translate(135, 80)" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800" font-size="24">
+    <text x="0" y="0" fill="#179B92" letter-spacing="1">FOOD</text>
+    <text x="82" y="0" fill="#F37A1F" letter-spacing="1">POS</text>
+  </g>
+
+  <!-- SMART RESTAURANT WORKSPACE text -->
+  <g transform="translate(135, 100)" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="9" letter-spacing="2">
+    <text x="0" y="0" fill="#F3EEE4" opacity="0.7">SMART RESTAURANT WORKSPACE</text>
+  </g>
+
+</svg>

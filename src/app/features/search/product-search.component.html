@@ -1,0 +1,101 @@
+<section class="search" aria-labelledby="search-heading">
+  <header class="search__header">
+    <div>
+      <h2 id="search-heading">{{ 'SEARCH.PRODUCTS' | translate }}</h2>
+      <p class="search__meta">{{ 'SEARCH.META' | translate }}</p>
+    </div>
+    @if (store.state().tookMs) {
+      <span class="search__timing">{{ store.state().total | localizedNum }} {{ 'SEARCH.HITS' | translate }} · {{ store.state().tookMs | localizedNum }}ms</span>
+    }
+  </header>
+
+  @if (canWrite()) {
+    <form class="editor" [formGroup]="form" (ngSubmit)="save()">
+      <h3>{{ editingId() ? ('SEARCH.EDIT_PRODUCT' | translate) : ('SEARCH.ADD_PRODUCT' | translate) }}</h3>
+      <div class="editor__grid">
+        <label><span>{{ 'SEARCH.NAME' | translate }}</span><input formControlName="name" /></label>
+        <label>
+          <span>{{ 'SEARCH.CATEGORY' | translate }}</span>
+          <select formControlName="category">
+            <option value="" disabled>Select…</option>
+            @for (cat of categories(); track cat.id) {
+              <option [value]="cat.name">{{ cat.name }}</option>
+            }
+          </select>
+        </label>
+        <label><span>{{ 'SEARCH.PRICE' | translate }}</span><input type="number" formControlName="price" /></label>
+        <label><span>{{ 'SEARCH.SKU' | translate }}</span><input formControlName="sku" /></label>
+        <label><span>{{ 'SEARCH.TAGS' | translate }}</span><input formControlName="tags" placeholder="spicy, vegan" /></label>
+        <label class="check"><input type="checkbox" formControlName="available" /><span>{{ 'SEARCH.AVAILABLE' | translate }}</span></label>
+      </div>
+      <div class="editor__actions">
+        <button type="submit" class="gos-btn gos-btn--primary">{{ editingId() ? ('SEARCH.UPDATE' | translate) : ('SEARCH.CREATE' | translate) }}</button>
+        @if (editingId()) {
+          <button type="button" class="gos-btn gos-btn--ghost" (click)="cancelEdit()">{{ 'SEARCH.CANCEL' | translate }}</button>
+        }
+      </div>
+    </form>
+  }
+
+  <label class="search__field">
+    <span class="sr-only">{{ 'SEARCH.PRODUCTS' | translate }}</span>
+    <input
+      type="search"
+      [ngModel]="store.state().term"
+      (ngModelChange)="onTermInput($event)"
+      [placeholder]="'SEARCH.SEARCH_PLACEHOLDER' | translate"
+      autocomplete="off"
+      appListKeyNav
+      [itemCount]="store.results().length"
+      (move)="store.moveActive($event)"
+      aria-controls="product-results"
+      [attr.aria-activedescendant]="store.activeProduct()?.id || null"
+    />
+  </label>
+
+  <div class="search__categories" role="toolbar" aria-label="Category filters">
+    <button type="button" class="gos-chip" [class.gos-chip--active]="store.state().category === null" (click)="store.setCategory(null)">{{ 'SEARCH.ALL' | translate }}</button>
+    @for (category of store.categories(); track category) {
+      <button type="button" class="gos-chip" [class.gos-chip--active]="store.state().category === category" (click)="store.setCategory(category)">
+        {{ category }}
+      </button>
+    }
+  </div>
+
+  @if (store.loading()) {
+    <div class="search__skeletons" aria-busy="true">
+      <app-skeleton height="2.6rem" />
+      <app-skeleton height="2.6rem" />
+      <app-skeleton height="2.6rem" />
+    </div>
+  } @else if (store.state().error) {
+    <div class="search__error" role="alert">{{ store.state().error }}</div>
+  } @else if (!store.results().length) {
+    <app-empty-state [title]="'SEARCH.NO_PRODUCTS' | translate" [message]="'SEARCH.NO_PRODUCTS_DESC' | translate" />
+  } @else {
+    <cdk-virtual-scroll-viewport itemSize="72" class="search__viewport" id="product-results" role="listbox" aria-label="Search results">
+      <div
+        *cdkVirtualFor="let product of store.results(); let i = index; trackBy: trackById"
+        [id]="product.id"
+        role="option"
+        [attr.aria-selected]="store.state().activeIndex === i"
+        class="search__item"
+        [class.search__item--active]="store.state().activeIndex === i"
+      >
+        <div>
+          <p class="search__name" [innerHTML]="product.name | highlightMatch: store.state().term"></p>
+          <p class="search__sku">{{ product.sku }} · {{ product.category }}</p>
+        </div>
+        <div class="search__right">
+          <strong>{{ product.price | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</strong>
+          @if (canWrite()) {
+            <div class="search__actions">
+              <button type="button" class="linkish" (click)="startEdit(product)">{{ 'SEARCH.EDIT' | translate }}</button>
+              <button type="button" class="linkish" (click)="remove(product)">{{ 'SEARCH.DELETE' | translate }}</button>
+            </div>
+          }
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  }
+</section>

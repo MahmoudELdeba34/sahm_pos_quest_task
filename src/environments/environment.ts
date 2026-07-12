@@ -1,0 +1,7 @@
+export const environment = {
+  production: false,
+  appName: 'Sahm Food POS',
+  apiBaseUrl: 'http://127.0.0.1:3000/api',
+  socketUrl: 'http://127.0.0.1:3000',
+  useRemoteBackend: true,
+};

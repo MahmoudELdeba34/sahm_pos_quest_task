@@ -1,0 +1,130 @@
+{
+  "info": {
+    "name": "Sahm Smart POS — Conceptual Mock API",
+    "description": "Documented contract for the in-memory mock backend used by the Smart Order Workspace. The Angular app primarily calls services directly; these routes describe the intended API surface if exposed via HTTP/MSW.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "List orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            }
+          }
+        },
+        {
+          "name": "Advance order status",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"preparing\",\n  \"idempotencyKey\": \"status:ord-1001:preparing\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/ord-1001/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "ord-1001", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kitchen",
+      "item": [
+        {
+          "name": "Get kitchen load snapshot",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kitchen/load",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "kitchen", "load"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Assistant",
+      "item": [
+        {
+          "name": "Stream recommendations",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"ord-1001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ai/recommendations/stream",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ai", "recommendations", "stream"]
+            },
+            "description": "Server-Sent Events / chunked stream of tokens and suggestions."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Search products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/search?q=burger&category=Mains&limit=40",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "search"],
+              "query": [
+                { "key": "q", "value": "burger" },
+                { "key": "category", "value": "Mains" },
+                { "key": "limit", "value": "40" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offline",
+      "item": [
+        {
+          "name": "Sync pending actions",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actions\": [\n    {\n      \"type\": \"order.status.update\",\n      \"payload\": { \"orderId\": \"ord-1001\", \"status\": \"preparing\" },\n      \"idempotencyKey\": \"status:ord-1001:preparing\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/offline/sync",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "offline", "sync"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4200"
+    }
+  ]
+}

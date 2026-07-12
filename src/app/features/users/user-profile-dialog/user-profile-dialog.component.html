@@ -1,0 +1,38 @@
+<div class="profile-dialog gos-glass">
+  <header>
+    <h2>{{ 'SIDE_NAV.WORKSPACE' | translate }}</h2>
+    <button type="button" class="close-btn" (click)="close()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </header>
+
+  @if (auth.user(); as user) {
+    <div class="profile-body">
+      <div class="avatar-large">
+        <label class="avatar-upload">
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" class="sr-only">
+          @if (auth.avatar()) {
+            <img [src]="auth.avatar()" alt="User Avatar" class="avatar-img" />
+          } @else {
+            <span class="initials">{{ user.name.slice(0, 2).toUpperCase() }}</span>
+          }
+          <div class="avatar-overlay">
+            <span class="material-symbols-outlined">edit</span>
+          </div>
+        </label>
+      </div>
+      <div class="user-details">
+        <h3>{{ user.name }}</h3>
+        <p>{{ user.email }}</p>
+        <span class="role-badge">{{ user.role }}</span>
+      </div>
+    </div>
+  }
+
+  <footer>
+    <button type="button" class="gos-btn gos-btn--danger" (click)="logout()">
+      <span class="material-symbols-outlined">logout</span>
+      {{ 'SIDE_NAV.SIGN_OUT' | translate }}
+    </button>
+  </footer>
+</div>

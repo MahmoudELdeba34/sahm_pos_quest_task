@@ -1,0 +1,21 @@
+{
+  "name": "smart-restaurant-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GourmetOS monorepo — frontend (Angular) + backend (Express API)",
+  "scripts": {
+    "dev": "concurrently -k -n backend,frontend -c green,cyan \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:all": "npm run dev",
+    "start": "npm run start:frontend",
+    "start:frontend": "npm --prefix frontend start",
+    "start:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "test": "npm --prefix frontend test",
+    "test:backend": "npm --prefix backend run typecheck",
+    "install:all": "npm --prefix frontend install && npm --prefix backend install && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

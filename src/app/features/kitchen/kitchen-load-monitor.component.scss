@@ -1,0 +1,137 @@
+.kitchen {
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--gos-shadow-sm);
+  display: grid;
+  gap: 14px;
+}
+
+.kitchen__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.kitchen__header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.kitchen__header p,
+.kitchen__meta,
+.waiting {
+  margin: 4px 0 0;
+  color: var(--gos-on-surface-variant);
+  font-size: 13px;
+}
+
+.level {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gos-primary) 12%, white);
+  color: var(--gos-primary);
+}
+
+.level[data-level='high'],
+.level[data-level='critical'] {
+  background: color-mix(in srgb, var(--gos-error) 12%, white);
+  color: var(--gos-error);
+}
+
+.kitchen__gauge {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--gos-surface-container-highest);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gos-primary-container);
+  transition: width 400ms ease;
+}
+
+.fill[data-level='high'] { background: #d08900; }
+.fill[data-level='critical'] { background: var(--gos-error); }
+
+.stations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.stations__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.stations__bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gos-surface-container);
+  overflow: hidden;
+}
+
+.stations__bar i {
+  display: block;
+  height: 100%;
+  background: var(--gos-secondary);
+}
+
+.editor {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gos-outline-variant);
+}
+
+.editor__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor__head h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.editor__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.editor label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gos-on-surface-variant);
+}
+
+.editor input {
+  border: 1px solid var(--gos-outline-variant);
+  background: var(--gos-surface-container-low);
+  border-radius: var(--gos-radius-md);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+@media (max-width: 720px) {
+  .editor__grid {
+    grid-template-columns: 1fr;
+  }
+}
+

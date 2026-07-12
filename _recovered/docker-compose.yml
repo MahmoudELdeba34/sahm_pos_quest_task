@@ -1,0 +1,12 @@
+services:
+  api:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      CORS_ORIGIN: http://localhost:4200,http://127.0.0.1:4201
+      JWT_SECRET: gourmetos-docker-secret
+      SIMULATION_ENABLED: "false"
+      MONGODB_URI: ${MONGODB_URI}

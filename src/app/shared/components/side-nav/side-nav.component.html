@@ -1,0 +1,76 @@
+<aside class="side" [class.side--collapsed]="collapsed()" aria-label="Primary">
+  <div class="side__brand">
+    <div class="mark"><img src="favicon.svg" alt="Logo" width="24" height="24"></div>
+    @if (!collapsed()) {
+      <div>
+        <strong>Sahm Food POS</strong>
+        <p>{{ auth.role() === 'manager' ? ('SIDE_NAV.WORKSPACE' | translate) : ('SIDE_NAV.GUEST_WORKSPACE' | translate) }}</p>
+      </div>
+    }
+    <button type="button" class="collapse" (click)="toggle()" [attr.aria-label]="collapsed() ? 'Expand' : 'Collapse'">
+      <span class="material-symbols-outlined">{{ collapsed() ? 'chevron_right' : 'chevron_left' }}</span>
+    </button>
+  </div>
+
+  @if (ops().length) {
+    <p class="side__label" [class.sr-only]="collapsed()">{{ 'SIDE_NAV.OPERATIONS' | translate }}</p>
+    <nav>
+      @for (item of ops(); track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="is-active" [title]="item.i18nKey | translate">
+          <span class="material-symbols-outlined">{{ item.icon }}</span>
+          @if (!collapsed()) {
+            <span>{{ item.i18nKey | translate }}</span>
+          }
+        </a>
+      }
+    </nav>
+  }
+
+  @if (catalog().length) {
+    <p class="side__label" [class.sr-only]="collapsed()">{{ 'SIDE_NAV.CATALOG' | translate }}</p>
+    <nav>
+      @for (item of catalog(); track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="is-active" [title]="item.i18nKey | translate">
+          <span class="material-symbols-outlined">{{ item.icon }}</span>
+          @if (!collapsed()) {
+            <span>{{ item.i18nKey | translate }}</span>
+          }
+        </a>
+      }
+    </nav>
+  }
+
+  @if (admin().length) {
+    <p class="side__label" [class.sr-only]="collapsed()">{{ 'SIDE_NAV.ADMIN' | translate }}</p>
+    <nav>
+      @for (item of admin(); track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="is-active" [title]="item.i18nKey | translate">
+          <span class="material-symbols-outlined">{{ item.icon }}</span>
+          @if (!collapsed()) {
+            <span>{{ item.i18nKey | translate }}</span>
+          }
+        </a>
+      }
+    </nav>
+  }
+
+  <div class="side__foot">
+    @if (auth.user(); as user) {
+      <button type="button" class="user" (click)="openProfile()" [title]="('SIDE_NAV.WORKSPACE' | translate) + ' ' + user.name">
+        <span class="avatar">
+          @if (auth.avatar()) {
+            <img [src]="auth.avatar()" alt="Avatar" class="avatar-img" />
+          } @else {
+            {{ user.name.slice(0, 2).toUpperCase() }}
+          }
+        </span>
+        @if (!collapsed()) {
+          <span>
+            <strong>{{ user.name }}</strong>
+            <small>{{ user.email }}</small>
+          </span>
+        }
+      </button>
+    }
+  </div>
+</aside>

@@ -1,0 +1,44 @@
+<header class="topbar">
+  <div class="topbar__brand">
+    <span class="material-symbols-outlined fill brand-icon">restaurant</span>
+    <div>
+      <h1>{{ title() }}</h1>
+      <button type="button" class="topbar__branch">
+        {{ subtitle() }}
+        <span class="material-symbols-outlined">expand_more</span>
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="topbar__search" (click)="openPalette.emit()">
+    <span class="material-symbols-outlined">search</span>
+    <span>{{ 'TOP_BAR.JUMP_TO' | translate }}</span>
+    <kbd>⌘K</kbd>
+  </button>
+
+  <div class="topbar__actions">
+    @if (auth.user(); as user) {
+      <span class="topbar__role">{{ user.role }}</span>
+    }
+    @if (!connectivity.online()) {
+      <span class="topbar__offline">Offline · {{ offlineQueue.pendingCount() }} queued</span>
+    }
+    <button type="button" class="icon-btn" (click)="connectivity.toggle()" [attr.aria-label]="connectivity.online() ? 'Go offline' : 'Go online'">
+      <span class="material-symbols-outlined">{{ connectivity.online() ? 'wifi' : 'wifi_off' }}</span>
+    </button>
+    <button type="button" class="icon-btn lang-toggle" (click)="toggleLanguage()" aria-label="Toggle language">
+      <span class="material-symbols-outlined">translate</span>
+      <span class="lang-text" style="font-size: 0.8rem; font-weight: bold;">{{ translate.currentLang() === 'en' ? 'عربي' : 'EN' }}</span>
+    </button>
+    @if (auth.hasPermission('notifications:read')) {
+      <app-notification-center />
+    }
+    <button type="button" class="avatar" [attr.aria-label]="'Profile of ' + (auth.user()?.name || 'user')" (click)="openProfile()">
+      @if (auth.avatar()) {
+        <img [src]="auth.avatar()" alt="User Avatar" class="avatar-img" />
+      } @else {
+        {{ (auth.user()?.name || 'GO').slice(0, 2).toUpperCase() }}
+      }
+    </button>
+  </div>
+</header>

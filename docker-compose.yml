@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: ./server
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      CORS_ORIGIN: http://localhost:4200,http://127.0.0.1:4201
+      JWT_SECRET: gourmetos-docker-secret
+      SIMULATION_ENABLED: "true"
+      DB_PATH: /data/gourmetos.sqlite
+    volumes:
+      - api-data:/data
+
+volumes:
+  api-data:

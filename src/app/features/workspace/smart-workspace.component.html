@@ -1,0 +1,37 @@
+<div class="workspace" [class.is-cashier]="isCashier()" [class.is-kitchen]="isKitchen()" [class.is-manager]="isManager()" [class.is-support]="isSupport()">
+  @if (isManager()) {
+    <section class="panel panel--dashboard">
+      <app-exec-dashboard />
+    </section>
+  }
+
+  @if (isCashier() || isManager()) {
+    <section class="panel panel--orders">
+      <app-orders-workspace />
+    </section>
+  }
+
+  @if (isManager() || isSupport()) {
+    <section class="panel panel--ai">
+      <app-ai-assistant-panel />
+    </section>
+  }
+
+  @if (isKitchen() || isManager()) {
+    <section class="panel panel--kitchen">
+      <app-kitchen-load-monitor />
+    </section>
+  }
+
+  @if (isCashier() || isManager()) {
+    <section class="panel panel--search">
+      <app-product-search />
+    </section>
+  }
+
+  <section class="panel panel--offline">
+    <app-offline-panel />
+  </section>
+
+  <app-developer-panel />
+</div>

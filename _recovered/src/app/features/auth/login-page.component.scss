@@ -1,0 +1,228 @@
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  background: var(--gos-linen);
+}
+
+.login__stage {
+  position: relative;
+  padding: clamp(28px, 5vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--gos-on-primary);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--gos-primary) 92%, #000) 0%, var(--gos-tertiary) 100%);
+  overflow: hidden;
+}
+
+.login__stage::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -20% 20%;
+  height: 55%;
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 14px,
+      color-mix(in srgb, var(--gos-ticket) 18%, transparent) 14px,
+      color-mix(in srgb, var(--gos-ticket) 18%, transparent) 15px
+    );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.login__mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  max-width: 18ch;
+}
+
+.login__mark .material-symbols-outlined {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--gos-radius-md);
+  background: var(--gos-ticket);
+  color: var(--gos-ink);
+  font-size: 28px;
+}
+
+.login__mark h1 {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.login__mark p {
+  margin: 0;
+  color: color-mix(in srgb, var(--gos-on-primary) 78%, transparent);
+  font-size: 15px;
+  max-width: 28ch;
+}
+
+.login__panel {
+  display: grid;
+  place-items: center;
+  padding: 28px 20px;
+}
+
+.login__card {
+  width: min(420px, 100%);
+  border-radius: var(--gos-radius-xl);
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+  background: var(--gos-surface-container-lowest);
+  border: 1px solid var(--gos-outline-variant);
+}
+
+.login__card h2 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.login__card > p {
+  margin: 0;
+  color: var(--gos-on-surface-variant);
+  font-size: 13px;
+}
+
+.login__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 3px;
+  border-radius: var(--gos-radius-md);
+  background: var(--gos-surface-container);
+  border: 1px solid var(--gos-outline-variant);
+}
+
+.login__tab {
+  border: 0;
+  border-radius: var(--gos-radius-sm);
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--gos-on-surface-variant);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.login__tab--active {
+  background: var(--gos-surface-container-lowest);
+  color: var(--gos-primary);
+  border: 1px solid var(--gos-outline-variant);
+}
+
+form {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gos-on-surface-variant);
+}
+
+input,
+select {
+  border: 1px solid var(--gos-outline-variant);
+  background: var(--gos-surface-container-low);
+  border-radius: var(--gos-radius-md);
+  padding: 12px 14px;
+  color: var(--gos-on-surface);
+  width: 100%;
+}
+
+select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gos-on-surface-variant) 50%),
+    linear-gradient(135deg, var(--gos-on-surface-variant) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  padding-inline-end: 36px;
+}
+
+.login__password {
+  position: relative;
+  display: grid;
+}
+
+.login__password input {
+  padding-inline-end: 44px;
+}
+
+.login__eye {
+  position: absolute;
+  inset-inline-end: 6px;
+  inset-block: 0;
+  margin: auto 0;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: var(--gos-radius-sm);
+  background: transparent;
+  color: var(--gos-on-surface-variant);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.login__eye:hover {
+  color: var(--gos-primary);
+  background: var(--gos-primary-fixed);
+}
+
+.login__eye .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.login__submit {
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 4px;
+}
+
+.login__error {
+  background: var(--gos-error-container);
+  color: var(--gos-on-error-container);
+  border-radius: var(--gos-radius-md);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.login__roles div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+@media (max-width: 860px) {
+  .login {
+    grid-template-columns: 1fr;
+  }
+
+  .login__stage {
+    min-height: 220px;
+  }
+
+  .login__mark h1 {
+    font-size: 40px;
+  }
+}

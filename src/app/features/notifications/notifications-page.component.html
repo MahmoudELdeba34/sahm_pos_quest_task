@@ -1,0 +1,48 @@
+<section class="page">
+  <header>
+    <p class="gos-label">{{ 'NOTIFICATIONS.ALERTS' | translate }}</p>
+    <h1>{{ 'NOTIFICATIONS.NOTIFICATIONS' | translate }}</h1>
+    <p>{{ 'NOTIFICATIONS.DESC' | translate }}</p>
+  </header>
+
+  @if (canWrite()) {
+    <form class="panel" [formGroup]="form" (ngSubmit)="create()">
+      <h2>{{ 'NOTIFICATIONS.BROADCAST' | translate }}</h2>
+      <div class="grid">
+        <label><span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span><input formControlName="title" /></label>
+        <label>
+          <span>{{ 'NOTIFICATIONS.SEVERITY' | translate }}</span>
+          <select formControlName="severity">
+            <option value="info">{{ 'NOTIFICATIONS.INFO' | translate }}</option>
+            <option value="warning">{{ 'NOTIFICATIONS.WARNING' | translate }}</option>
+            <option value="critical">{{ 'NOTIFICATIONS.CRITICAL' | translate }}</option>
+          </select>
+        </label>
+      </div>
+      <label><span>{{ 'NOTIFICATIONS.BODY' | translate }}</span><textarea rows="3" formControlName="body"></textarea></label>
+      <button type="submit" class="gos-btn gos-btn--primary">{{ 'NOTIFICATIONS.SEND' | translate }}</button>
+    </form>
+  }
+
+  <div class="list">
+    @for (item of items(); track item.id) {
+      <article class="card" [class.card--unread]="!item.read" [attr.data-sev]="item.severity">
+        <div>
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.body }}</p>
+          <small>{{ item.createdAt | date: 'short' }} · {{ item.severity }}</small>
+        </div>
+        <div class="actions">
+          @if (!item.read) {
+            <button type="button" class="gos-btn gos-btn--ghost" (click)="markRead(item)">{{ 'NOTIFICATIONS.MARK_READ' | translate }}</button>
+          }
+          @if (canWrite()) {
+            <button type="button" class="gos-btn gos-btn--ghost" (click)="remove(item)">{{ 'NOTIFICATIONS.DELETE' | translate }}</button>
+          }
+        </div>
+      </article>
+    } @empty {
+      <p class="muted">{{ loading() ? ('NOTIFICATIONS.LOADING' | translate) : ('NOTIFICATIONS.NO_NOTIFS' | translate) }}</p>
+    }
+  </div>
+</section>

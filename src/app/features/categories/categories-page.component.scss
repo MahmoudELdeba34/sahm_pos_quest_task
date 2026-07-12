@@ -1,0 +1,42 @@
+.page { display: grid; gap: 16px; }
+header h1 { margin: 2px 0; font-size: clamp(28px, 4vw, 36px); font-family: var(--gos-display); }
+header p:last-child { margin: 0; color: var(--gos-on-surface-variant); }
+.panel {
+  background: var(--gos-surface-container-lowest);
+  border: 1px solid var(--gos-outline-variant);
+  border-radius: var(--gos-radius-lg);
+  padding: 16px;
+}
+label { display: grid; gap: 6px; font-size: 12px; font-weight: 700; color: var(--gos-on-surface-variant); }
+.row { display: flex; gap: 8px; }
+input {
+  flex: 1;
+  border: 1px solid var(--gos-outline-variant);
+  background: var(--gos-surface-container-low);
+  border-radius: var(--gos-radius-md);
+  padding: 10px 12px;
+  color: var(--gos-on-surface);
+  font: inherit;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: var(--gos-radius-md);
+  border: 1px solid var(--gos-outline-variant);
+  background: var(--gos-surface-container-lowest);
+  font-weight: 700;
+  font-size: 13px;
+}
+.chip button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--gos-on-surface-variant);
+  display: grid;
+  place-items: center;
+}
+.chip .material-symbols-outlined { font-size: 16px; }
+.muted { color: var(--gos-on-surface-variant); }

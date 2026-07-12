@@ -1,0 +1,232 @@
+.side {
+  width: 248px;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 8px;
+  padding: 14px 10px;
+  background: #17231b;
+  color: #f3eee4;
+  border-right: 1px solid color-mix(in srgb, #f3eee4 12%, transparent);
+}
+
+.side--collapsed {
+  width: 76px;
+}
+
+.side__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px 12px;
+}
+
+.mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--gos-ticket);
+  color: var(--gos-ink);
+  flex-shrink: 0;
+}
+
+.side__brand strong {
+  display: block;
+  font-family: var(--gos-display);
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side__brand p,
+.user small {
+  margin: 0;
+  color: color-mix(in srgb, #f3eee4 65%, transparent);
+  font-size: 11px;
+  text-transform: capitalize;
+}
+
+.collapse {
+  margin-inline-start: auto;
+  border: 0;
+  background: color-mix(in srgb, #fff 5%, transparent);
+  color: inherit;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.collapse:hover {
+  background: color-mix(in srgb, #fff 10%, transparent);
+}
+
+.side--collapsed .side__brand {
+  padding-left: 0;
+  padding-right: 0;
+  justify-content: center;
+}
+
+.side--collapsed .collapse {
+  position: absolute;
+  right: -14px;
+  top: 24px;
+  background: #17231b;
+  border: 1px solid color-mix(in srgb, #f3eee4 12%, transparent);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  z-index: 10;
+}
+
+.side--collapsed .collapse:hover {
+  background: color-mix(in srgb, #fff 10%, #17231b);
+}
+
+.side__label {
+  margin: 10px 8px 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, #f3eee4 45%, transparent);
+}
+
+nav {
+  display: grid;
+  gap: 2px;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: color-mix(in srgb, #f3eee4 82%, transparent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background: color-mix(in srgb, #fff 8%, transparent);
+  color: #fff;
+}
+
+nav a.is-active {
+  background: color-mix(in srgb, var(--gos-ticket) 88%, white);
+  color: var(--gos-ink);
+}
+
+.side__foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, #f3eee4 12%, transparent);
+}
+
+.user {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.user:hover {
+  background: color-mix(in srgb, #fff 8%, transparent);
+}
+
+.user strong,
+.user small {
+  display: block;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: #0f1712;
+  color: var(--gos-ticket);
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .side {
+    position: fixed;
+    z-index: 60;
+    left: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    min-height: auto;
+    height: 72px;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+    overflow-x: auto;
+    border-right: 0;
+    border-top: 1px solid color-mix(in srgb, #f3eee4 12%, transparent);
+    gap: 16px;
+    align-items: center;
+  }
+
+  .side__brand, .side__foot, .side__label, .collapse {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    height: 100%;
+  }
+
+  nav a {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    font-size: 10px;
+    height: 100%;
+    justify-content: center;
+    min-width: 64px;
+  }
+}

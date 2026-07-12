@@ -1,0 +1,20 @@
+<div class="app-shell" [class.app-shell--auth]="!showChrome()">
+  @if (showChrome()) {
+    <app-side-nav />
+    <div class="app-shell__workspace">
+      <app-top-bar (openPalette)="openPalette()" />
+      <main class="app-shell__main">
+        <router-outlet />
+      </main>
+    </div>
+  } @else {
+    <main class="app-shell__main app-shell__main--flush">
+      <router-outlet />
+    </main>
+  }
+
+  <app-toaster />
+  @if (showChrome()) {
+    <app-command-palette />
+  }
+</div>

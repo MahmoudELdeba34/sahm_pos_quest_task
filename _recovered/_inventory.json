@@ -1,0 +1,410 @@
+[
+  {
+    "line": 252,
+    "bytes": 567,
+    "path": "G:\\Smart_Restaurant_Workspace\\.gitignore",
+    "dest": ".gitignore"
+  },
+  {
+    "line": 314,
+    "bytes": 300,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\.env.example",
+    "dest": "backend\\.env.example"
+  },
+  {
+    "line": 321,
+    "bytes": 156,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\Dockerfile",
+    "dest": "backend\\Dockerfile"
+  },
+  {
+    "line": 314,
+    "bytes": 736,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\package.json",
+    "dest": "backend\\package.json"
+  },
+  {
+    "line": 313,
+    "bytes": 1571,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\ai.controller.ts",
+    "dest": "backend\\src\\controllers\\ai.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 1854,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\auth.controller.ts",
+    "dest": "backend\\src\\controllers\\auth.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 1457,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\kitchen.controller.ts",
+    "dest": "backend\\src\\controllers\\kitchen.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 1736,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\notifications.controller.ts",
+    "dest": "backend\\src\\controllers\\notifications.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 4605,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\orders.controller.ts",
+    "dest": "backend\\src\\controllers\\orders.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 3544,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\products.controller.ts",
+    "dest": "backend\\src\\controllers\\products.controller.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 1592,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\controllers\\users.controller.ts",
+    "dest": "backend\\src\\controllers\\users.controller.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 480,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\db\\connection.ts",
+    "dest": "backend\\src\\db\\connection.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 321,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\db\\seed.ts",
+    "dest": "backend\\src\\db\\seed.ts"
+  },
+  {
+    "line": 314,
+    "bytes": 1816,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\index.ts",
+    "dest": "backend\\src\\index.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 2011,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\models\\kitchen.model.ts",
+    "dest": "backend\\src\\models\\kitchen.model.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 2010,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\models\\notification.model.ts",
+    "dest": "backend\\src\\models\\notification.model.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 6481,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\models\\order.model.ts",
+    "dest": "backend\\src\\models\\order.model.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 5888,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\models\\product.model.ts",
+    "dest": "backend\\src\\models\\product.model.ts"
+  },
+  {
+    "line": 311,
+    "bytes": 4111,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\models\\user.model.ts",
+    "dest": "backend\\src\\models\\user.model.ts"
+  },
+  {
+    "line": 312,
+    "bytes": 3030,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\services\\auth.service.ts",
+    "dest": "backend\\src\\services\\auth.service.ts"
+  },
+  {
+    "line": 314,
+    "bytes": 3553,
+    "path": "G:\\Smart_Restaurant_Workspace\\backend\\src\\socket\\simulation.ts",
+    "dest": "backend\\src\\socket\\simulation.ts"
+  },
+  {
+    "line": 315,
+    "bytes": 291,
+    "path": "G:\\Smart_Restaurant_Workspace\\docker-compose.yml",
+    "dest": "docker-compose.yml"
+  },
+  {
+    "line": 289,
+    "bytes": 842,
+    "path": "G:\\Smart_Restaurant_Workspace\\package.json",
+    "dest": "package.json"
+  },
+  {
+    "line": 215,
+    "bytes": 205,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\.env.example",
+    "dest": "server\\.env.example"
+  },
+  {
+    "line": 169,
+    "bytes": 1528,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\ai.controller.ts",
+    "dest": "server\\src\\controllers\\ai.controller.ts"
+  },
+  {
+    "line": 181,
+    "bytes": 1833,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\auth.controller.ts",
+    "dest": "server\\src\\controllers\\auth.controller.ts"
+  },
+  {
+    "line": 169,
+    "bytes": 519,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\demo.controller.ts",
+    "dest": "server\\src\\controllers\\demo.controller.ts"
+  },
+  {
+    "line": 169,
+    "bytes": 206,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\health.controller.ts",
+    "dest": "server\\src\\controllers\\health.controller.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 1415,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\kitchen.controller.ts",
+    "dest": "server\\src\\controllers\\kitchen.controller.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 1650,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\notifications.controller.ts",
+    "dest": "server\\src\\controllers\\notifications.controller.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 4467,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\orders.controller.ts",
+    "dest": "server\\src\\controllers\\orders.controller.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 3366,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\products.controller.ts",
+    "dest": "server\\src\\controllers\\products.controller.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 1506,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\controllers\\users.controller.ts",
+    "dest": "server\\src\\controllers\\users.controller.ts"
+  },
+  {
+    "line": 215,
+    "bytes": 696,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\db\\seed.ts",
+    "dest": "server\\src\\db\\seed.ts"
+  },
+  {
+    "line": 215,
+    "bytes": 1374,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\index.ts",
+    "dest": "server\\src\\index.ts"
+  },
+  {
+    "line": 167,
+    "bytes": 2386,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\domain.ts",
+    "dest": "server\\src\\models\\domain.ts"
+  },
+  {
+    "line": 167,
+    "bytes": 209,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\index.ts",
+    "dest": "server\\src\\models\\index.ts"
+  },
+  {
+    "line": 167,
+    "bytes": 928,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\kitchen.model.ts",
+    "dest": "server\\src\\models\\kitchen.model.ts"
+  },
+  {
+    "line": 216,
+    "bytes": 1681,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\notification.model.ts",
+    "dest": "server\\src\\models\\notification.model.ts"
+  },
+  {
+    "line": 216,
+    "bytes": 5771,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\order.model.ts",
+    "dest": "server\\src\\models\\order.model.ts"
+  },
+  {
+    "line": 216,
+    "bytes": 4898,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\product.model.ts",
+    "dest": "server\\src\\models\\product.model.ts"
+  },
+  {
+    "line": 216,
+    "bytes": 3384,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\models\\user.model.ts",
+    "dest": "server\\src\\models\\user.model.ts"
+  },
+  {
+    "line": 170,
+    "bytes": 449,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\ai.routes.ts",
+    "dest": "server\\src\\routes\\ai.routes.ts"
+  },
+  {
+    "line": 181,
+    "bytes": 369,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\auth.routes.ts",
+    "dest": "server\\src\\routes\\auth.routes.ts"
+  },
+  {
+    "line": 170,
+    "bytes": 250,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\demo.routes.ts",
+    "dest": "server\\src\\routes\\demo.routes.ts"
+  },
+  {
+    "line": 170,
+    "bytes": 237,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\health.routes.ts",
+    "dest": "server\\src\\routes\\health.routes.ts"
+  },
+  {
+    "line": 219,
+    "bytes": 1091,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\index.ts",
+    "dest": "server\\src\\routes\\index.ts"
+  },
+  {
+    "line": 219,
+    "bytes": 657,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\kitchen.routes.ts",
+    "dest": "server\\src\\routes\\kitchen.routes.ts"
+  },
+  {
+    "line": 219,
+    "bytes": 904,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\notifications.routes.ts",
+    "dest": "server\\src\\routes\\notifications.routes.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 1052,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\orders.routes.ts",
+    "dest": "server\\src\\routes\\orders.routes.ts"
+  },
+  {
+    "line": 219,
+    "bytes": 1347,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\products.routes.ts",
+    "dest": "server\\src\\routes\\products.routes.ts"
+  },
+  {
+    "line": 219,
+    "bytes": 704,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\routes\\users.routes.ts",
+    "dest": "server\\src\\routes\\users.routes.ts"
+  },
+  {
+    "line": 218,
+    "bytes": 2922,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\services\\auth.service.ts",
+    "dest": "server\\src\\services\\auth.service.ts"
+  },
+  {
+    "line": 171,
+    "bytes": 118,
+    "path": "G:\\Smart_Restaurant_Workspace\\server\\src\\types\\domain.ts",
+    "dest": "server\\src\\types\\domain.ts"
+  },
+  {
+    "line": 222,
+    "bytes": 4851,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\core\\auth\\auth.service.ts",
+    "dest": "src\\app\\core\\auth\\auth.service.ts"
+  },
+  {
+    "line": 220,
+    "bytes": 154,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\core\\data\\seed-data.ts",
+    "dest": "src\\app\\core\\data\\seed-data.ts"
+  },
+  {
+    "line": 220,
+    "bytes": 3115,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\core\\infrastructure\\gourmet-api.client.ts",
+    "dest": "src\\app\\core\\infrastructure\\gourmet-api.client.ts"
+  },
+  {
+    "line": 220,
+    "bytes": 2862,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\core\\services\\product-api.service.ts",
+    "dest": "src\\app\\core\\services\\product-api.service.ts"
+  },
+  {
+    "line": 220,
+    "bytes": 5174,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\core\\services\\realtime-gateway.service.ts",
+    "dest": "src\\app\\core\\services\\realtime-gateway.service.ts"
+  },
+  {
+    "line": 221,
+    "bytes": 3586,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\auth\\login-page.component.html",
+    "dest": "src\\app\\features\\auth\\login-page.component.html"
+  },
+  {
+    "line": 189,
+    "bytes": 4404,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\auth\\login-page.component.scss",
+    "dest": "src\\app\\features\\auth\\login-page.component.scss"
+  },
+  {
+    "line": 221,
+    "bytes": 2995,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\auth\\login-page.component.ts",
+    "dest": "src\\app\\features\\auth\\login-page.component.ts"
+  },
+  {
+    "line": 189,
+    "bytes": 4861,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\dashboard\\exec-dashboard.component.scss",
+    "dest": "src\\app\\features\\dashboard\\exec-dashboard.component.scss"
+  },
+  {
+    "line": 227,
+    "bytes": 2501,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\dashboard\\exec-dashboard.component.ts",
+    "dest": "src\\app\\features\\dashboard\\exec-dashboard.component.ts"
+  },
+  {
+    "line": 227,
+    "bytes": 1989,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\features\\search\\product-search.component.ts",
+    "dest": "src\\app\\features\\search\\product-search.component.ts"
+  },
+  {
+    "line": 188,
+    "bytes": 1356,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\shared\\components\\bottom-nav\\bottom-nav.component.scss",
+    "dest": "src\\app\\shared\\components\\bottom-nav\\bottom-nav.component.scss"
+  },
+  {
+    "line": 192,
+    "bytes": 1935,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\shared\\components\\command-palette\\command-palette.component.scss",
+    "dest": "src\\app\\shared\\components\\command-palette\\command-palette.component.scss"
+  },
+  {
+    "line": 188,
+    "bytes": 3276,
+    "path": "G:\\Smart_Restaurant_Workspace\\src\\app\\shared\\components\\top-bar\\top-bar.component.scss",
+    "dest": "src\\app\\shared\\components\\top-bar\\top-bar.component.scss"
+  }
+]

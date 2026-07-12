@@ -1,0 +1,93 @@
+.palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--gos-on-surface) 20%, transparent);
+  backdrop-filter: blur(6px);
+  display: grid;
+  align-content: start;
+  padding: 0;
+}
+
+.palette {
+  background: var(--gos-surface-container);
+  border-radius: 0 0 24px 24px;
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(11, 28, 48, 0.2);
+  animation: gos-entry 0.35s ease both;
+}
+
+.palette__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--gos-outline-variant);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+.palette__input input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.palette__input kbd {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--gos-surface-container-low);
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: var(--gos-outline);
+}
+
+.palette__list {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.palette__list a {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  transition: background 140ms ease;
+}
+
+.palette__list a:hover {
+  background: color-mix(in srgb, var(--gos-primary-container) 14%, transparent);
+}
+
+.palette__list .material-symbols-outlined {
+  color: var(--gos-primary);
+}
+
+.palette__list strong {
+  display: block;
+  font-size: 14px;
+}
+
+.palette__list small {
+  color: var(--gos-on-surface-variant);
+  font-size: 12px;
+}
+
+.palette__close {
+  margin-top: 20px;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--gos-outline-variant) 35%, transparent);
+  background: transparent;
+  padding: 14px 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gos-on-surface-variant);
+  cursor: pointer;
+}

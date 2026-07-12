@@ -1,0 +1,172 @@
+<div class="bento-dashboard">
+  <!-- Top Row: High Level KPIs -->
+  <section class="kpi-row">
+    <div class="kpi-card gos-glass-strong gos-entry" style="animation-delay: 0.05s">
+      <div class="kpi-icon icon-primary"><span class="material-symbols-outlined">payments</span></div>
+      <div class="kpi-data">
+        <p>{{ 'DASHBOARD.TODAYS_REVENUE' | translate }}</p>
+        <h3>{{ revenue() | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</h3>
+        <div class="kpi-trend">
+          <span class="material-symbols-outlined" [class.success]="revenueProgress() >= 100">
+            {{ revenueProgress() >= 100 ? 'trending_up' : 'trending_flat' }}
+          </span>
+          <span>{{ revenueProgress() | number:'1.0-1' | localizedNum }}% {{ 'DASHBOARD.OF_TARGET' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card gos-glass-strong gos-entry" style="animation-delay: 0.1s">
+      <div class="kpi-icon icon-info"><span class="material-symbols-outlined">receipt_long</span></div>
+      <div class="kpi-data">
+        <p>{{ 'DASHBOARD.LIVE_ORDERS' | translate }}</p>
+        <h3>{{ liveOrders() | localizedNum }}</h3>
+        <div class="kpi-trend">
+          <span class="material-symbols-outlined warning">pending_actions</span>
+          <span>{{ delayed() | localizedNum }} {{ 'DASHBOARD.DELAYED' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card gos-glass-strong gos-entry" style="animation-delay: 0.15s">
+      <div class="kpi-icon icon-success"><span class="material-symbols-outlined">point_of_sale</span></div>
+      <div class="kpi-data">
+        <p>{{ 'DASHBOARD.AVG_TICKET' | translate }}</p>
+        <h3>{{ avgTicketSize() | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</h3>
+        <div class="kpi-trend">
+          <span class="material-symbols-outlined success">check_circle</span>
+          <span>{{ 'DASHBOARD.OPTIMAL_SIZE' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card gos-glass-strong gos-entry" style="animation-delay: 0.2s">
+      <div class="kpi-icon icon-danger"><span class="material-symbols-outlined">cancel</span></div>
+      <div class="kpi-data">
+        <p>{{ 'DASHBOARD.CANCEL_RATE' | translate }}</p>
+        <h3>{{ cancellationRate() | percent:'1.1-1' | localizedNum }}</h3>
+        <div class="kpi-trend">
+          <span class="material-symbols-outlined" [class.danger]="cancellationRate() > 0.05" [class.success]="cancellationRate() <= 0.05">
+            {{ cancellationRate() > 0.05 ? 'trending_up' : 'trending_down' }}
+          </span>
+          <span>{{ 'DASHBOARD.VS_YESTERDAY' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Middle Row: Charts -->
+  <section class="charts-row">
+    <!-- Hourly Trend Line Chart -->
+    <div class="chart-card bento-card gos-glass-strong gos-entry" style="animation-delay: 0.25s">
+      <div class="card-header">
+        <h2>{{ 'DASHBOARD.HOURLY_REVENUE_TREND' | translate }}</h2>
+        <span class="material-symbols-outlined">monitoring</span>
+      </div>
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="hourlyRevenueChartData()"
+          [options]="hourlyChartOptions()"
+          [type]="'line'">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- Channels Doughnut Chart -->
+    <div class="chart-card-small bento-card gos-glass-strong gos-entry" style="animation-delay: 0.3s">
+      <div class="card-header">
+        <h2>{{ 'DASHBOARD.CHANNEL_BREAKDOWN' | translate }}</h2>
+        <span class="material-symbols-outlined">pie_chart</span>
+      </div>
+      <div class="chart-container doughnut-container">
+        <canvas baseChart
+          [data]="channelChartData()"
+          [options]="doughnutOptions()"
+          [type]="'doughnut'">
+        </canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Row: Telemetry, AI, Sellers, Feed -->
+  <section class="ops-row">
+    <!-- Kitchen Stations -->
+    <div class="bento-card stations gos-glass-strong gos-entry" style="animation-delay: 0.35s">
+      <div class="card-header">
+        <h2>{{ 'DASHBOARD.KITCHEN_TELEMETRY' | translate }}</h2>
+        <span class="badge" [attr.data-level]="kitchenLevel()">{{ 'DASHBOARD.LOAD' | translate }}: {{ kitchenLoad() | number: '1.0-0' | localizedNum }}%</span>
+      </div>
+      <div class="stations-list">
+        @for (station of stations(); track station.name) {
+          <div class="station">
+            <div class="station-label">
+              <span>{{ 'DASHBOARD.' + station.name | translate }}</span>
+              <strong>{{ station.load | number: '1.0-0' | localizedNum }}%</strong>
+            </div>
+            <div class="meter">
+              <i [style.width.%]="station.load" [class.danger]="station.load > 85" [class.warning]="station.load > 60 && station.load <= 85"></i>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Top Sellers -->
+    <div class="bento-card topsellers gos-glass-strong gos-entry" style="animation-delay: 0.4s">
+      <div class="card-header">
+        <h2>{{ 'DASHBOARD.TOP_MOVERS' | translate }}</h2>
+        <span class="material-symbols-outlined">star</span>
+      </div>
+      <ul class="sellers-list">
+        @for (item of topSellers(); track item.name; let i = $index) {
+          <li>
+            <span class="rank">#{{ i + 1 | localizedNum }}</span>
+            <div class="seller-info">
+              <span class="name">{{ item.name }}</span>
+              <span class="revenue">{{ item.revenue | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</span>
+            </div>
+            <span class="count">{{ item.count | localizedNum }}x</span>
+          </li>
+        } @empty {
+          <p class="empty-text">{{ 'DASHBOARD.NO_DATA' | translate }}</p>
+        }
+      </ul>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="bento-card ai-insight gos-glass-strong gos-entry" style="animation-delay: 0.45s" [attr.data-tone]="aiInsights().tone">
+      <div class="card-header">
+        <h2>{{ 'DASHBOARD.AI_INSIGHT' | translate }}</h2>
+        <span class="material-symbols-outlined">{{ aiInsights().icon }}</span>
+      </div>
+      <div class="insight-body">
+        <h3>{{ 'DASHBOARD.' + aiInsights().title | translate }}</h3>
+        <p>{{ 'DASHBOARD.' + aiInsights().desc | translate }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Feed -->
+  <section class="bento-card feed gos-glass-strong gos-entry" style="animation-delay: 0.5s">
+    <div class="card-header">
+      <h2>{{ 'DASHBOARD.LIVE_FEED' | translate }}</h2>
+      <a routerLink="/orders" class="view-all">{{ 'DASHBOARD.VIEW_LOG' | translate }} →</a>
+    </div>
+    <div class="feed-list">
+      @for (order of recent(); track order.id) {
+        <div class="feed-item" [class.delayed]="order.isDelayed">
+          <div class="feed-icon" [attr.data-tone]="order.isDelayed ? 'danger' : order.channel === 'delivery' ? 'secondary' : 'primary'">
+            <span class="material-symbols-outlined">{{ order.isDelayed ? 'kitchen' : order.channel === 'delivery' ? 'delivery_dining' : 'shopping_bag' }}</span>
+          </div>
+          <div class="feed-details">
+            <strong>{{ 'DASHBOARD.ORDER' | translate }} {{ order.number | localizedNum }}</strong>
+            <p>{{ order.customerName }} · {{ order.status }}</p>
+          </div>
+          <div class="feed-meta">
+            <strong class="feed-total">{{ order.total | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</strong>
+            <span class="feed-time">{{ order.createdAt | date:'shortTime' | localizedNum }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</div>

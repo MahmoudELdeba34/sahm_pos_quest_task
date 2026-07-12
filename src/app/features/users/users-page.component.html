@@ -1,0 +1,57 @@
+<section class="page">
+  <header class="page__head">
+    <div>
+      <p class="gos-label">{{ 'USERS.ACCESS_CONTROL' | translate }}</p>
+      <h1>{{ 'USERS.USERS_ROLES' | translate }}</h1>
+      <p>{{ 'USERS.DESC' | translate }}</p>
+    </div>
+  </header>
+
+  @if (canWrite()) {
+    <form class="panel" [formGroup]="createForm" (ngSubmit)="create()" autocomplete="off">
+      <h2>{{ 'USERS.ADD_USER' | translate }}</h2>
+      <div class="grid4">
+        <label><span>{{ 'USERS.NAME' | translate }}</span><input formControlName="name" autocomplete="off" /></label>
+        <label><span>{{ 'USERS.EMAIL' | translate }}</span><input type="email" formControlName="email" autocomplete="off" /></label>
+        <label>
+          <span>{{ 'AUTH.PASSWORD' | translate }}</span>
+          <div class="password-wrapper">
+            <input [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="new-password" />
+            <button type="button" class="eye-btn" (click)="togglePasswordVisibility()" tabindex="-1">
+              <span class="material-symbols-outlined">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
+            </button>
+          </div>
+        </label>
+        <label>
+          <span>{{ 'USERS.ROLE' | translate }}</span>
+          <select formControlName="role">
+            @for (role of roles; track role) {
+              <option [value]="role">{{ role }}</option>
+            }
+          </select>
+        </label>
+      </div>
+      <button type="submit" class="gos-btn gos-btn--primary">{{ 'USERS.CREATE_USER' | translate }}</button>
+    </form>
+  }
+
+  <div class="table">
+    <div class="table__head">
+      <span>{{ 'USERS.NAME' | translate }}</span><span>{{ 'USERS.EMAIL' | translate }}</span><span>{{ 'USERS.ROLE' | translate }}</span><span></span>
+    </div>
+    @for (user of users(); track user.id) {
+      <div class="table__row">
+        <strong>{{ user.name }}</strong>
+        <span>{{ user.email }}</span>
+        <select (change)="changeRole(user, $any($event.target).value)" [disabled]="!canWrite()">
+          @for (role of roles; track role) {
+            <option [value]="role" [selected]="role === user.role">{{ role }}</option>
+          }
+        </select>
+        <button type="button" class="gos-btn gos-btn--ghost" (click)="remove(user)" [disabled]="!canWrite()">{{ 'SEARCH.DELETE' | translate }}</button>
+      </div>
+    } @empty {
+      <p class="muted">{{ 'USERS.NO_USERS' | translate }}</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<div class="dev-panel" [class.is-open]="isDevMode()">
+  <button class="dev-toggle" (click)="toggleDevMode()" title="Developer Tools">
+    <span class="material-symbols-outlined">bug_report</span>
+  </button>
+
+  @if (isDevMode()) {
+    <div class="dev-content">
+      <h3>Developer Panel</h3>
+      
+      <div class="dev-section">
+        <h4>Order Simulation</h4>
+        <div class="dev-actions">
+          <button class="gos-btn gos-btn--outline" (click)="generateOrders(1)">
+            <span class="material-symbols-outlined">add_shopping_cart</span>
+            Generate 1 Order
+          </button>
+          <button class="gos-btn gos-btn--outline" (click)="generateOrders(10)">
+            <span class="material-symbols-outlined">local_shipping</span>
+            Generate 10 Orders
+          </button>
+        </div>
+      </div>
+
+      <div class="dev-section">
+        <h4>Kitchen Load</h4>
+        <div class="dev-actions">
+          <button class="gos-btn gos-btn--danger" (click)="triggerKitchenRush()">
+            <span class="material-symbols-outlined">local_fire_department</span>
+            Trigger Kitchen Rush
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

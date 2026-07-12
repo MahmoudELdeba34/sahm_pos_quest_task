@@ -1,0 +1,45 @@
+@if (open()) {
+  <div class="palette-overlay" (click)="hide()" role="presentation">
+    <div class="palette" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="palette__input">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" [placeholder]="'COMMAND_PALETTE.PLACEHOLDER' | translate" autofocus />
+        <kbd>⌘K</kbd>
+      </div>
+
+      <p class="gos-label">{{ 'COMMAND_PALETTE.SUGGESTED' | translate }}</p>
+      <div class="palette__list">
+        <a routerLink="/orders" (click)="hide()">
+          <span class="material-symbols-outlined">add_shopping_cart</span>
+          <div>
+            <strong>{{ 'COMMAND_PALETTE.NEW_ORDERS' | translate }}</strong>
+            <small>{{ 'COMMAND_PALETTE.NEW_ORDERS_DESC' | translate }}</small>
+          </div>
+        </a>
+        <a routerLink="/ai" (click)="hide()">
+          <span class="material-symbols-outlined">analytics</span>
+          <div>
+            <strong>{{ 'COMMAND_PALETTE.AI_AUDIT' | translate }}</strong>
+            <small>{{ 'COMMAND_PALETTE.AI_AUDIT_DESC' | translate }}</small>
+          </div>
+        </a>
+        <a routerLink="/kitchen" (click)="hide()">
+          <span class="material-symbols-outlined">restaurant_menu</span>
+          <div>
+            <strong>{{ 'COMMAND_PALETTE.KITCHEN_LOAD' | translate }}</strong>
+            <small>{{ 'COMMAND_PALETTE.KITCHEN_LOAD_DESC' | translate }}</small>
+          </div>
+        </a>
+        <a routerLink="/products" (click)="hide()">
+          <span class="material-symbols-outlined">inventory_2</span>
+          <div>
+            <strong>{{ 'COMMAND_PALETTE.PRODUCT_SEARCH' | translate }}</strong>
+            <small>{{ 'COMMAND_PALETTE.PRODUCT_SEARCH_DESC' | translate }}</small>
+          </div>
+        </a>
+      </div>
+
+      <button type="button" class="palette__close" (click)="hide()">{{ 'COMMAND_PALETTE.CLOSE' | translate }}</button>
+    </div>
+  </div>
+}

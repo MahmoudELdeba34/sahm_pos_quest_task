@@ -1,0 +1,34 @@
+<section class="page">
+  <header>
+    <p class="gos-label">{{ 'CATEGORIES.CATALOG' | translate }}</p>
+    <h1>{{ 'CATEGORIES.CATEGORIES' | translate }}</h1>
+    <p>{{ 'CATEGORIES.DESC' | translate }}</p>
+  </header>
+
+  @if (canWrite()) {
+    <form class="panel" [formGroup]="form" (ngSubmit)="create()">
+      <label>
+        <span>{{ 'CATEGORIES.NEW_CATEGORY' | translate }}</span>
+        <div class="row">
+          <input formControlName="name" placeholder="e.g. Mains" />
+          <button type="submit" class="gos-btn gos-btn--primary">{{ 'CATEGORIES.ADD' | translate }}</button>
+        </div>
+      </label>
+    </form>
+  }
+
+  <div class="chips">
+    @for (cat of categories(); track cat.id) {
+      <div class="chip">
+        <span>{{ cat.name }}</span>
+        @if (canWrite()) {
+          <button type="button" (click)="remove(cat)" aria-label="Delete">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        }
+      </div>
+    } @empty {
+      <p class="muted">{{ 'CATEGORIES.NO_CATEGORIES' | translate }}</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,135 @@
+<div class="login">
+  <aside class="login__stage" aria-hidden="true">
+    <div class="aurora-container">
+      <div class="aurora-orb orb-1"></div>
+      <div class="aurora-orb orb-2"></div>
+      <div class="aurora-orb orb-3"></div>
+      <div class="aurora-noise"></div>
+    </div>
+    
+    <div class="login__stage-content">
+      <div class="login__mark">
+        <img src="assets/logo.svg" alt="Sahm Food POS Logo" style="width: 380px; max-width: 100%; margin-left: -15px;" />
+      </div>
+      <div class="login__badge">
+        <span class="live-indicator"></span>
+        {{ 'AUTH.LIVE_SERVICE' | translate }}
+      </div>
+    </div>
+  </aside>
+
+  <main class="login__panel">
+    <section class="login__card">
+      <header class="login__header">
+        <h2>{{ mode() === 'login' ? ('AUTH.SIGN_IN_HEADING' | translate) : ('AUTH.CREATE_ACCOUNT_HEADING' | translate) }}</h2>
+        <p>
+          {{
+            mode() === 'login'
+              ? ('AUTH.SIGN_IN_DESC' | translate)
+              : ('AUTH.CREATE_ACCOUNT_DESC' | translate)
+          }}
+        </p>
+      </header>
+
+      <div class="login__tabs" role="tablist" aria-label="Auth mode">
+        <div class="login__tabs-inner" [class.is-register]="mode() === 'register'">
+          <div class="tab-indicator"></div>
+          <button
+            type="button"
+            role="tab"
+            class="login__tab"
+            [class.active]="mode() === 'login'"
+            [attr.aria-selected]="mode() === 'login'"
+            (click)="setMode('login')"
+          >
+            {{ 'AUTH.SIGN_IN_HEADING' | translate }}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            class="login__tab"
+            [class.active]="mode() === 'register'"
+            [attr.aria-selected]="mode() === 'register'"
+            (click)="setMode('register')"
+          >
+            {{ 'AUTH.CREATE_ACCOUNT_HEADING' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="login__form">
+        @if (mode() === 'register') {
+          <div class="form-group">
+            <label for="nameInput">{{ 'AUTH.FULL_NAME' | translate }}</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">person</span>
+              <input id="nameInput" type="text" formControlName="name" autocomplete="name" placeholder="e.g. Maya Hassan" />
+            </div>
+          </div>
+        }
+
+        <div class="form-group">
+          <label for="emailInput">{{ 'AUTH.EMAIL' | translate }}</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined input-icon">mail</span>
+            <input id="emailInput" type="email" formControlName="email" autocomplete="username" placeholder="you@company.com" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordInput">{{ 'AUTH.PASSWORD' | translate }}</label>
+          <div class="input-wrapper password-wrapper">
+            <span class="material-symbols-outlined input-icon">lock</span>
+            <input
+              id="passwordInput"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              [attr.autocomplete]="mode() === 'register' ? 'new-password' : 'current-password'"
+              placeholder="Min 6 characters"
+            />
+            <button
+              type="button"
+              class="login__eye"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showPassword()"
+            >
+              <span class="material-symbols-outlined">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
+            </button>
+          </div>
+        </div>
+
+        @if (mode() === 'register') {
+          <div class="form-group">
+            <label for="roleSelect">{{ 'AUTH.ROLE' | translate }}</label>
+            <div class="input-wrapper select-wrapper">
+              <span class="material-symbols-outlined input-icon">badge</span>
+              <select id="roleSelect" formControlName="role">
+                @for (role of roles; track role.value) {
+                  <option [value]="role.value">{{ role.label }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+        @if (error()) {
+          <div class="login__error" role="alert">
+            <span class="material-symbols-outlined">error</span>
+            <span>{{ error() }}</span>
+          </div>
+        }
+
+        <button type="submit" class="login__submit-btn" [class.loading]="loading()" [disabled]="loading()">
+          @if (loading()) {
+            <span class="loader"></span>
+            {{ mode() === 'register' ? ('AUTH.CREATING' | translate) : ('AUTH.SIGNING_IN' | translate) }}
+          } @else {
+            {{ mode() === 'register' ? ('AUTH.CREATE_ACCOUNT_HEADING' | translate) : ('AUTH.SIGN_IN_HEADING' | translate) }}
+            <span class="material-symbols-outlined">arrow_forward</span>
+          }
+        </button>
+      </form>
+    </section>
+  </main>
+</div>

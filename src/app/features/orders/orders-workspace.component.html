@@ -1,0 +1,209 @@
+<section class="live" aria-labelledby="live-orders-title">
+  <header class="live__header">
+    <div>
+      <h1 id="live-orders-title">{{ 'ORDERS.LIVE_ORDERS' | translate }}</h1>
+      <p><span class="dot"></span>{{ store.counts().active | localizedNum }} {{ 'ORDERS.ACTIVE_TICKETS' | translate }}</p>
+    </div>
+    <div class="live__actions">
+      <div class="view-toggle" role="group" aria-label="View mode">
+        <button type="button" [class.active]="viewMode() === 'kanban'" (click)="viewMode.set('kanban')">{{ 'ORDERS.KANBAN' | translate }}</button>
+        <button type="button" [class.active]="viewMode() === 'cards'" (click)="viewMode.set('cards')">{{ 'ORDERS.CARDS' | translate }}</button>
+      </div>
+      @if (canWrite()) {
+        <button type="button" class="gos-btn gos-btn--primary" (click)="showCreate.set(!showCreate())">
+          <span class="material-symbols-outlined">add</span>
+          {{ 'ORDERS.NEW_ORDER' | translate }}
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (showCreate() && canWrite()) {
+    <form class="create-panel" [formGroup]="createForm" (ngSubmit)="submitOrder()">
+      <h2>{{ 'ORDERS.CREATE_ORDER' | translate }}</h2>
+      <div class="create-grid">
+        <label><span>{{ 'ORDERS.CUSTOMER' | translate }}</span><input formControlName="customerName" /></label>
+        <label>
+          <span>{{ 'ORDERS.CHANNEL' | translate }}</span>
+          <select formControlName="channel">
+            <option value="walk-in">{{ 'ORDERS.WALK_IN' | translate }}</option>
+            <option value="delivery">{{ 'ORDERS.DELIVERY' | translate }}</option>
+            <option value="online">{{ 'ORDERS.ONLINE' | translate }}</option>
+          </select>
+        </label>
+        <label><span>{{ 'ORDERS.TABLE' | translate }}</span><input formControlName="tableNumber" /></label>
+        <label><span>{{ 'ORDERS.DELIVERY_ADDRESS' | translate }}</span><input formControlName="deliveryAddress" /></label>
+        <label>
+          <span>{{ 'ORDERS.PRIORITY' | translate }}</span>
+          <select formControlName="priority">
+            <option value="normal">{{ 'ORDERS.NORMAL' | translate }}</option>
+            <option value="high">{{ 'ORDERS.HIGH' | translate }}</option>
+            <option value="urgent">{{ 'ORDERS.URGENT' | translate }}</option>
+          </select>
+        </label>
+        <div class="cart-section">
+          <label>
+            <span>{{ 'ORDERS.SEARCH_PRODUCT' | translate }}</span>
+            <input type="text" [formControl]="searchControl" placeholder="Type to search products..." autocomplete="off" />
+          </label>
+          
+          @if (searchControl.value && searchResults().length > 0) {
+            <ul class="search-results">
+              @for (product of searchResults(); track product.id) {
+                <li (click)="addItem(product)">
+                  {{ product.name }} - {{ product.price | currency:'EGP':'symbol':'1.0-0' | localizedNum }}
+                </li>
+              }
+            </ul>
+          } @else if (searchControl.value && !isSearching()) {
+            <p class="no-results">No products found.</p>
+          }
+
+          @if (selectedItems().length > 0) {
+            <div class="cart-items">
+              <h4>{{ 'ORDERS.SELECTED_ITEMS' | translate }}</h4>
+              <ul>
+                @for (item of selectedItems(); track item.product.id) {
+                  <li>
+                    <span>{{ item.product.name }}</span>
+                    <div class="qty-controls">
+                      <button type="button" (click)="updateQuantity(item.product.id, -1)">-</button>
+                      <span>{{ item.quantity | localizedNum }}</span>
+                      <button type="button" (click)="updateQuantity(item.product.id, 1)">+</button>
+                    </div>
+                    <span>{{ (item.product.price * item.quantity) | currency:'EGP':'symbol':'1.0-0' | localizedNum }}</span>
+                    <button type="button" class="remove-btn" (click)="removeItem(item.product.id)">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+        <label><span>{{ 'ORDERS.ETA' | translate }}</span><input type="number" formControlName="estimatedMinutes" /></label>
+      </div>
+      <button type="submit" class="gos-btn gos-btn--primary">{{ 'ORDERS.PLACE_ORDER' | translate }}</button>
+    </form>
+  }
+
+  <div class="live__filters hide-scrollbar" role="toolbar" aria-label="Order filters">
+    @for (filter of filters; track filter.value) {
+      <button type="button" class="gos-chip" [class.gos-chip--active]="store.filter() === filter.value" (click)="store.setFilter(filter.value)">
+        {{ filter.label | translate }}
+      </button>
+    }
+  </div>
+
+  @if (viewMode() === 'kanban') {
+    <div class="kanban" cdkDropListGroup>
+      @for (column of board(); track column.id) {
+        <section class="kanban__col gos-glass">
+          <header>
+            <h2>{{ 'ORDERS.' + column.id.toUpperCase() | translate }}</h2>
+            <span>{{ column.orders.length | localizedNum }}</span>
+          </header>
+          <div
+            class="kanban__list"
+            cdkDropList
+            [id]="column.id"
+            [cdkDropListData]="column.orders"
+            [cdkDropListConnectedTo]="listIds"
+            [cdkDropListDisabled]="!canWrite()"
+            (cdkDropListDropped)="drop($event, column.id)"
+          >
+            @for (order of column.orders; track order.id) {
+              <article
+                class="ticket gos-glass"
+                cdkDrag
+                [cdkDragData]="order"
+                [cdkDragDisabled]="!canWrite()"
+                [attr.data-stripe]="stripe(order)"
+                [class.ticket--selected]="store.selectedId() === order.id"
+                (click)="openOrderDetails(order)"
+              >
+                <div class="ticket__top">
+                  <div>
+                    <span class="ticket__meta">{{ 'ORDERS.ORDER' | translate }} {{ order.number | localizedNum }}</span>
+                    <h3>{{ order.customerName }}</h3>
+                  </div>
+                  @if (order.isDelayed || order.priority === 'urgent') {
+                    <span class="tag tag--rush">{{ 'ORDERS.RUSH' | translate }}</span>
+                  }
+                </div>
+                <ul class="ticket__items">
+                  @for (item of order.items; track item.id) {
+                    <li><span><b>{{ item.quantity | localizedNum }}×</b> {{ item.name }}</span></li>
+                  }
+                </ul>
+                <footer class="ticket__foot">
+                  <div class="timer" [class.timer--late]="order.isDelayed">{{ elapsed(order.createdAt) | localizedNum }}</div>
+                  <span class="material-symbols-outlined drag-hint">drag_indicator</span>
+                </footer>
+              </article>
+            } @empty {
+              <p class="kanban__empty">{{ 'ORDERS.DROP_TICKETS' | translate }}</p>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  } @else {
+    <div class="live__grid">
+      @for (order of store.filteredOrders(); track order.id) {
+        <article class="ticket gos-glass" [attr.data-stripe]="stripe(order)" [class.ticket--selected]="store.selectedId() === order.id" (click)="openOrderDetails(order)">
+          <div class="ticket__top">
+            <div>
+              <span class="ticket__meta">{{ 'ORDERS.ORDER' | translate }} {{ order.number | localizedNum }}</span>
+              <h3>{{ order.channel === 'walk-in' && order.tableNumber ? ('ORDERS.TABLE' | translate) + ' ' + (order.tableNumber | localizedNum) : order.channel }} · {{ order.customerName }}</h3>
+            </div>
+            @if (order.isDelayed || order.priority === 'urgent') {
+              <span class="tag tag--rush"><span class="material-symbols-outlined">priority_high</span> {{ 'ORDERS.RUSH' | translate }}</span>
+            } @else if (order.channel === 'delivery') {
+              <span class="tag tag--pickup"><span class="material-symbols-outlined">delivery_dining</span> {{ 'ORDERS.PICKUP' | translate }}</span>
+            } @else if (order.status === 'ready') {
+              <span class="tag tag--ready"><span class="material-symbols-outlined">check_circle</span> {{ 'ORDERS.READY' | translate }}</span>
+            }
+          </div>
+          <ul class="ticket__items">
+            @for (item of order.items; track item.id) {
+              <li>
+                <span><b>{{ item.quantity | localizedNum }}×</b> {{ item.name }}</span>
+                @if (item.notes) { <em>{{ item.notes }}</em> }
+              </li>
+            }
+          </ul>
+          @if (store.selectedId() === order.id && tipFor(order.id); as tip) {
+            <div class="ticket__ai">
+              <span class="material-symbols-outlined fill">psychology</span>
+              <p>{{ tip }}</p>
+            </div>
+          }
+          <footer class="ticket__foot">
+            <div class="timer" [class.timer--late]="order.isDelayed">
+              <span class="material-symbols-outlined">timer</span>
+              {{ elapsed(order.createdAt) | localizedNum }}
+            </div>
+            <button type="button" class="gos-btn gos-btn--primary" [disabled]="!canWrite()" (click)="$event.stopPropagation(); store.advanceOrder(order.id)">
+              {{ actionLabel(order.status) }}
+            </button>
+          </footer>
+        </article>
+      }
+
+      <aside class="health gos-glass">
+        <div class="health__block">
+          <div class="health__row">
+            <span class="gos-label">{{ 'ORDERS.KITCHEN_HEALTH' | translate }}</span>
+            <strong>{{ kitchen.level() }}</strong>
+          </div>
+          <div class="health__meter"><i [style.width.%]="kitchen.overallPercent()"></i></div>
+          <div class="health__meta">
+            <span>{{ 'DASHBOARD.LOAD' | translate }}: {{ kitchen.overallPercent() | localizedNum }}%</span>
+            <span>{{ 'ORDERS.REVENUE' | translate }}: {{ revenue() | currency: 'EGP':'symbol':'1.0-0' | localizedNum }}</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  }
+</section>

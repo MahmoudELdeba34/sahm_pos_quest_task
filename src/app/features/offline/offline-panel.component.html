@@ -1,0 +1,42 @@
+<section class="offline" aria-labelledby="offline-heading">
+  <header class="offline__header">
+    <div>
+      <h2 id="offline-heading">{{ 'OFFLINE.QUEUE' | translate }}</h2>
+      <p class="offline__meta">
+        {{ connectivity.online() ? ('OFFLINE.ONLINE' | translate) : ('OFFLINE.OFFLINE' | translate) }} · {{ connectivity.reason() }}
+      </p>
+    </div>
+    <div class="offline__actions">
+      <button type="button" class="btn btn--ghost" (click)="connectivity.toggle()">
+        {{ connectivity.online() ? ('OFFLINE.GO_OFFLINE' | translate) : ('OFFLINE.GO_ONLINE' | translate) }}
+      </button>
+      <button type="button" class="btn btn--primary" (click)="sync()" [disabled]="!connectivity.online() || queue.pendingCount() === 0">
+        {{ 'OFFLINE.SYNC' | translate }} ({{ queue.pendingCount() }})
+      </button>
+    </div>
+  </header>
+
+  @if (!queue.actions().length) {
+    <app-empty-state [title]="'OFFLINE.EMPTY' | translate" [message]="'OFFLINE.EMPTY_DESC' | translate" />
+  } @else {
+    <ul class="offline__list">
+      @for (action of queue.actions(); track action.id) {
+        <li>
+          <div class="offline__row">
+            <strong>{{ action.type }}</strong>
+            <app-status-badge
+              [label]="action.status"
+              [tone]="action.status === 'synced' ? 'success' : action.status === 'failed' ? 'danger' : action.status === 'syncing' ? 'info' : 'warning'"
+            />
+          </div>
+          <p class="offline__key">{{ 'OFFLINE.KEY' | translate }}: {{ action.idempotencyKey }}</p>
+          <p class="offline__time">{{ action.createdAt | date: 'short' }} · {{ 'OFFLINE.ATTEMPTS' | translate }} {{ action.attempts }}</p>
+          @if (action.lastError) {
+            <p class="offline__error">{{ action.lastError }}</p>
+          }
+        </li>
+      }
+    </ul>
+    <button type="button" class="btn btn--ghost" (click)="queue.clearSynced()">{{ 'OFFLINE.CLEAR' | translate }}</button>
+  }
+</section>

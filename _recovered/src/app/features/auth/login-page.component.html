@@ -1,0 +1,108 @@
+<div class="login">
+  <aside class="login__stage" aria-hidden="true">
+    <div class="login__mark">
+      <span class="material-symbols-outlined fill">restaurant</span>
+      <h1>GourmetOS</h1>
+      <p>Shift board for cashiers, kitchen, and floor managers.</p>
+    </div>
+    <p class="gos-label" style="position: relative; z-index: 1; color: color-mix(in srgb, white 70%, transparent)">
+      Nasr City · Live service
+    </p>
+  </aside>
+
+  <div class="login__panel">
+    <section class="login__card gos-entry">
+      <div>
+        <h2>{{ mode() === 'login' ? 'Sign in' : 'Create account' }}</h2>
+        <p>
+          {{
+            mode() === 'login'
+              ? 'Enter your email, or create an account and pick a role.'
+              : 'Choose email, password, and role for this workspace.'
+          }}
+        </p>
+      </div>
+
+      <div class="login__tabs" role="tablist" aria-label="Auth mode">
+        <button
+          type="button"
+          role="tab"
+          class="login__tab"
+          [class.login__tab--active]="mode() === 'login'"
+          [attr.aria-selected]="mode() === 'login'"
+          (click)="setMode('login')"
+        >
+          Sign in
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="login__tab"
+          [class.login__tab--active]="mode() === 'register'"
+          [attr.aria-selected]="mode() === 'register'"
+          (click)="setMode('register')"
+        >
+          Create account
+        </button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        @if (mode() === 'register') {
+          <label>
+            <span>Full name</span>
+            <input type="text" formControlName="name" autocomplete="name" placeholder="e.g. Maya Hassan" />
+          </label>
+        }
+
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" autocomplete="username" placeholder="you@company.com" />
+        </label>
+
+        <label>
+          <span>Password</span>
+          <div class="login__password">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              [attr.autocomplete]="mode() === 'register' ? 'new-password' : 'current-password'"
+              placeholder="Min 6 characters"
+            />
+            <button
+              type="button"
+              class="login__eye"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showPassword()"
+            >
+              <span class="material-symbols-outlined">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
+            </button>
+          </div>
+        </label>
+
+        @if (mode() === 'register') {
+          <label>
+            <span>Role</span>
+            <select formControlName="role">
+              @for (role of roles; track role.value) {
+                <option [value]="role.value">{{ role.label }}</option>
+              }
+            </select>
+          </label>
+        }
+
+        @if (error()) {
+          <div class="login__error" role="alert">{{ error() }}</div>
+        }
+
+        <button type="submit" class="gos-btn gos-btn--primary login__submit" [disabled]="loading()">
+          @if (loading()) {
+            {{ mode() === 'register' ? 'Creating…' : 'Signing in…' }}
+          } @else {
+            {{ mode() === 'register' ? 'Create account' : 'Sign in' }}
+          }
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
