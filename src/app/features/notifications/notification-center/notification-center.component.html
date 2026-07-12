@@ -5,30 +5,44 @@
   }
 </button>
 
-<app-drawer [isOpen]="isOpen" title="Notifications" (closeDrawer)="closeDrawer()">
-  <div class="notifications-list">
-    @for (notification of notifications(); track notification.id) {
-      <div class="notification-card" [class.is-unread]="!notification.read">
-        <div class="notification-icon" [ngClass]="notification.severity">
-          @if (notification.severity === 'critical') {
-            <span class="material-symbols-outlined">error</span>
-          } @else if (notification.severity === 'warning') {
-            <span class="material-symbols-outlined">warning</span>
-          } @else {
-            <span class="material-symbols-outlined">info</span>
-          }
+<app-drawer [isOpen]="isOpen" title="Notification Center" (closeDrawer)="closeDrawer()">
+  <div class="notification-layout">
+    <aside class="notification-sidebar">
+      <ul>
+        @for (cat of categories; track cat) {
+          <li 
+            [class.active]="selectedCategory() === cat" 
+            (click)="selectedCategory.set(cat)">
+            {{ cat === 'All' ? cat : '• ' + cat }}
+          </li>
+        }
+      </ul>
+    </aside>
+    
+    <div class="notifications-list">
+      @for (notification of filteredNotifications(); track notification.id) {
+        <div class="notification-card" [class.is-unread]="!notification.read">
+          <div class="notification-icon" [ngClass]="notification.severity">
+            @if (notification.severity === 'critical') {
+              <span class="material-symbols-outlined">error</span>
+            } @else if (notification.severity === 'warning') {
+              <span class="material-symbols-outlined">warning</span>
+            } @else {
+              <span class="material-symbols-outlined">info</span>
+            }
+          </div>
+          <div class="notification-content">
+            <h4>{{ notification.title }}</h4>
+            <p>{{ notification.body }}</p>
+            <span class="time">{{ notification.createdAt | date:'shortTime' }}</span>
+          </div>
         </div>
-        <div class="notification-content">
-          <h4>{{ notification.title }}</h4>
-          <p>{{ notification.body }}</p>
-          <span class="time">{{ notification.createdAt | date:'shortTime' }}</span>
+      } @empty {
+        <div class="empty-state">
+          <span class="material-symbols-outlined">notifications_paused</span>
+          <p>No new notifications</p>
         </div>
-      </div>
-    } @empty {
-      <div class="empty-state">
-        <span class="material-symbols-outlined">notifications_paused</span>
-        <p>No new notifications</p>
-      </div>
-    }
+      }
+    </div>
   </div>
 </app-drawer>
