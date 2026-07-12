@@ -122,26 +122,26 @@ export class ProductSearchComponent implements OnInit {
       });
   }
 
-  async remove(product: Product): Promise<void> {
+  remove(product: Product): void {
     if (!this.canWrite()) return;
     
-    const confirmed = await this.dialog.confirm({
+    this.dialog.confirm({
       title: 'Delete Product',
       message: `Are you sure you want to delete "${product.name}"? This action cannot be undone.`,
       confirmText: 'Delete'
+    }).then(confirmed => {
+      if (confirmed) {
+        this.api.deleteProduct(product.id)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              this.toast.success('Product deleted');
+              this.store.refresh();
+            },
+            error: () => this.toast.error('Delete failed'),
+          });
+      }
     });
-
-    if (confirmed) {
-      this.api.deleteProduct(product.id)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            this.toast.success('Product deleted');
-            this.store.refresh();
-          },
-          error: () => this.toast.error('Delete failed'),
-        });
-    }
   }
 
   trackById = (_: number, product: Product): string => product.id;

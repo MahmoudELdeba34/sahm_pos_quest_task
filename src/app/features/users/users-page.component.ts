@@ -72,46 +72,48 @@ export class UsersPageComponent implements OnInit {
       });
   }
 
-  async changeRole(user: AuthUser, role: string): Promise<void> {
+  changeRole(user: AuthUser, role: string): void {
     if (!this.canWrite()) return;
     
-    const confirmed = await this.dialog.confirm({
+    this.dialog.confirm({
       title: this.translate.instant('DIALOG.CONFIRM_ROLE_CHANGE'),
       message: this.translate.instant('DIALOG.CONFIRM_ROLE_MESSAGE', { name: user.name, role }),
       confirmText: this.translate.instant('DIALOG.CHANGE')
-    });
-    if (!confirmed) return;
+    }).then(confirmed => {
+      if (!confirmed) return;
 
-    this.api.updateUser(user.id, { role: role as AppRole })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (updated) => {
-          this.users.update((list) => list.map((u) => (u.id === updated.id ? updated : u)));
-        }
-      });
+      this.api.updateUser(user.id, { role: role as AppRole })
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (updated) => {
+            this.users.update((list) => list.map((u) => (u.id === updated.id ? updated : u)));
+          }
+        });
+    });
   }
 
-  async remove(user: AuthUser): Promise<void> {
+  remove(user: AuthUser): void {
     if (!this.canWrite()) return;
     if (user.id === this.auth.user()?.id) {
       this.toast.warning(this.translate.instant('TOAST.CANNOT_DELETE_SELF'));
       return;
     }
     
-    const confirmed = await this.dialog.confirm({
+    this.dialog.confirm({
       title: this.translate.instant('DIALOG.CONFIRM_DELETE'),
       message: this.translate.instant('DIALOG.CONFIRM_DELETE_USER', { name: user.name }),
       intent: 'danger',
       confirmText: this.translate.instant('DIALOG.DELETE')
-    });
-    if (!confirmed) return;
+    }).then(confirmed => {
+      if (!confirmed) return;
 
-    this.api.deleteUser(user.id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.users.update((list) => list.filter((u) => u.id !== user.id));
-        }
-      });
+      this.api.deleteUser(user.id)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.users.update((list) => list.filter((u) => u.id !== user.id));
+          }
+        });
+    });
   }
 }

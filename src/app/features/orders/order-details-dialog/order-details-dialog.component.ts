@@ -27,17 +27,17 @@ export class OrderDetailsDialogComponent {
     this.dialogRef.close();
   }
 
-  async cancelOrder(): Promise<void> {
-    const confirmed = await this.dialog.confirm({
+  cancelOrder(): void {
+    this.dialog.confirm({
       title: 'Cancel Order',
       message: 'Are you sure you want to cancel this order?',
       intent: 'danger'
+    }).then(confirmed => {
+      if (confirmed) {
+        this.store.applyStatus(this.order.id, 'cancelled');
+        this.close();
+      }
     });
-
-    if (confirmed) {
-      this.store.applyStatus(this.order.id, 'cancelled');
-      this.close();
-    }
   }
 
   advanceOrder(): void {

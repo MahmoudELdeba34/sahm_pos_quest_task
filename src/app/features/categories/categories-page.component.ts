@@ -61,23 +61,24 @@ export class CategoriesPageComponent implements OnInit {
       });
   }
 
-  async remove(cat: CategoryRecord): Promise<void> {
+  remove(cat: CategoryRecord): void {
     if (!this.canWrite()) return;
     
-    const confirmed = await this.dialog.confirm({
+    this.dialog.confirm({
       title: this.translate.instant('DIALOG.CONFIRM_DELETE'),
       message: this.translate.instant('DIALOG.CONFIRM_DELETE_CATEGORY', { name: cat.name }),
       intent: 'danger',
       confirmText: this.translate.instant('DIALOG.DELETE')
-    });
-    if (!confirmed) return;
+    }).then(confirmed => {
+      if (!confirmed) return;
 
-    this.api.deleteCategory(cat.id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.categories.update((list) => list.filter((c) => c.id !== cat.id));
-        }
-      });
+      this.api.deleteCategory(cat.id)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.categories.update((list) => list.filter((c) => c.id !== cat.id));
+          }
+        });
+    });
   }
 }
